@@ -8,7 +8,7 @@
 PRODUCT_NAME = gs_docs_viewer
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.docsViewer
+PRODUCT_BUNDLE_IDENTIFIER = com.genericsuite.docsViewer
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2026 com.example. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2026 com.genericsuite. All rights reserved.

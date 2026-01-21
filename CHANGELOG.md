@@ -18,7 +18,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Removed
 
 
-## [0.1.0] - 2026-01-21
+## [1.0.0+1] - 2026-01-21
 
 ### Added
 - Initial release

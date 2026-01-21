@@ -1,4 +1,4 @@
-package com.example.gs_docs_viewer
+package com.genericsuite.gs_docs_viewer
 
 import io.flutter.embedding.android.FlutterActivity
 
