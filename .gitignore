@@ -27,3 +27,35 @@ doc/api/
 
 .flutter-plugins
 .flutter-plugins-dependencies
+
+.venv/
+
+.idea/
+.vscode/
+
+genericsuite-basecamp/
+
+# assets/docs/*
+assets/docs/*.md
+assets/docs/Backend-Development/
+assets/docs/Backend-Development/GenericSuite-AI/
+assets/docs/Backend-Development/GenericSuite-Core/
+assets/docs/Backend-Development/GenericSuite-Scripts/
+assets/docs/Configuration-Guide/
+assets/docs/documents/
+assets/docs/Frontend-Development/
+assets/docs/Frontend-Development/GenericSuite-AI/
+assets/docs/Frontend-Development/GenericSuite-Core/
+assets/docs/images/*
+!assets/docs/images/gs_ai_logo_circle.png
+!assets/docs/images/gs_logo_circle.png
+assets/docs/Other/
+assets/docs/Releases/
+assets/docs/Releases/images/
+assets/docs/Sample-Code/
+assets/docs/Sample-Code/exampleapp/
+assets/docs/Sample-Code/fastapitemplate/
+assets/docs/Sample-Code/genericsuite-be-scripts/
+assets/docs/Sample-Code/genericsuite-configs/
+assets/docs/stylesheets/
+assets/docs_manifest.json
