@@ -6,6 +6,7 @@ class DocManifestItem {
   final List<DocManifestItem>? children;
   final String type; // 'page' or 'section'
   final String source; // 'nav' or 'external'
+  final String lang; // 'en' or 'es'
 
   DocManifestItem({
     required this.title,
@@ -13,6 +14,7 @@ class DocManifestItem {
     this.children,
     required this.type,
     required this.source,
+    required this.lang,
   });
 
   factory DocManifestItem.fromJson(Map<String, dynamic> json) {
@@ -24,6 +26,7 @@ class DocManifestItem {
           .toList(),
       type: json['type'] as String,
       source: json['source'] as String,
+      lang: json['lang'] as String,
     );
   }
 }

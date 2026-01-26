@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:markdown/markdown.dart' as md;
-import 'package:url_launcher/url_launcher.dart';
 
 import '../models/doc_manifest.dart';
 import '../services/fontawesome_service.dart';
@@ -10,35 +9,26 @@ import '../services/utilities.dart';
 import 'doc_drawer.dart';
 
 const debug = false;
+
 const contentLoadError = '# Error\nCould not load content:';
 
-Future<void> launchURLBrowser(String url) async {
-  // Parse the URL string into a Uri object
-  final Uri uri = Uri.parse(url);
-
-  // Check if the URL can be launched before attempting to do so
-  if (await canLaunchUrl(uri)) {
-    // Launch the URL in the external application (default browser)
-    await launchUrl(
-      uri,
-      mode: LaunchMode.externalApplication,
-    );
-  } else {
-    // Handle the case where the URL cannot be launched
-    throw 'Could not launch $url';
-  }
-}
+const bool alwaysReload = true;
+const bool showLang = true;
 
 class DocViewerScreen extends StatefulWidget {
   final DocManifestItem? initialItem;
   final List<DocManifestItem> manifest;
   final Function(DocManifestItem) onPageChanged;
+  final Function(String) onLangChanged;
+  final String lang;
 
   const DocViewerScreen({
     super.key,
     required this.manifest,
     this.initialItem,
     required this.onPageChanged,
+    required this.onLangChanged,
+    required this.lang,
   });
 
   @override
@@ -54,11 +44,12 @@ class _DocViewerScreenState extends State<DocViewerScreen> {
   final ScrollController _scrollController = ScrollController();
   final Map<String, GlobalKey> _anchorKeys = {};
   final Map<String, AnchorHeaderBuilder> _builders = {};
+  String lang = '';
 
   @override
   void didUpdateWidget(DocViewerScreen oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.initialItem != oldWidget.initialItem) {
+    if (widget.initialItem != oldWidget.initialItem || alwaysReload) {
       _previousItem = oldWidget.initialItem;
       _loadContent();
       _firstTime = false;
@@ -69,6 +60,7 @@ class _DocViewerScreenState extends State<DocViewerScreen> {
   void initState() {
     super.initState();
     _firstTime = true;
+    lang = widget.lang;
     _loadContent();
   }
 
@@ -128,12 +120,13 @@ class _DocViewerScreenState extends State<DocViewerScreen> {
     }
 
     try {
-      content = await rootBundle.loadString('assets/docs/$fullPath');
+      content = await rootBundle.loadString('assets/docs_$lang/$fullPath');
     } catch (e) {
       // Try adding .md if it's missing
       if (!fullPath.endsWith('.md')) {
         try {
-          content = await rootBundle.loadString('assets/docs/$fullPath.md');
+          content =
+              await rootBundle.loadString('assets/docs_$lang/$fullPath.md');
         } catch (e2) {
           logError(
               '$contentLoadError File "$fullPath.md" (or .md). Error: $e \n[GFC-E-010]');
@@ -241,6 +234,13 @@ class _DocViewerScreenState extends State<DocViewerScreen> {
         manifest: widget.manifest,
         selectedItem: widget.initialItem,
         onItemSelected: widget.onPageChanged,
+        onLangChanged: (newLang) {
+          setState(() {
+            lang = newLang;
+          });
+          widget.onLangChanged(lang);
+        },
+        lang: lang,
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -251,7 +251,7 @@ class _DocViewerScreenState extends State<DocViewerScreen> {
               children: <Widget>[
                 MarkdownBody(
                   data: _markdownContent != null
-                      ? transformContent(_markdownContent!)
+                      ? '${showLang ? '[$lang]\n' : ''}${transformContent(_markdownContent!)}'
                       : '--No content--',
                   selectable: true,
                   imageBuilder: (uri, title, alt) {
@@ -269,7 +269,8 @@ class _DocViewerScreenState extends State<DocViewerScreen> {
                           parentPath.isNotEmpty) {
                         path = './$path';
                       }
-                      assetPath = 'assets/docs/${_getPath(path, parentPath)}';
+                      assetPath =
+                          'assets/docs_$lang/${_getPath(path, parentPath)}';
                       try {
                         image = Image.asset(assetPath, semanticLabel: alt);
                       } catch (e) {
@@ -394,6 +395,7 @@ class _DocViewerScreenState extends State<DocViewerScreen> {
                             'children': null,
                             'type': 'file',
                             'source': 'calculated',
+                            'lang': widget.lang,
                           });
                           widget.onPageChanged(item);
                         }

@@ -54,10 +54,12 @@ class AppHome extends StatefulWidget {
 class _AppHomeState extends State<AppHome> {
   DocManifestItem? _currentItem;
   bool _initialized = false;
+  String lang = '';
 
   @override
   void initState() {
     super.initState();
+    lang = 'en';
     _init();
   }
 
@@ -67,7 +69,7 @@ class _AppHomeState extends State<AppHome> {
 
     if (mounted) {
       setState(() {
-        _currentItem = docService.getFirstPage();
+        _currentItem = docService.getFirstPage(lang);
         _initialized = true;
       });
     }
@@ -89,6 +91,20 @@ class _AppHomeState extends State<AppHome> {
           _currentItem = item;
         });
       },
+      onLangChanged: (newLang) {
+        setState(() {
+          lang = newLang;
+          _currentItem = DocManifestItem.fromJson({
+            'path': _currentItem!.path,
+            'title': _currentItem!.title,
+            'children': _currentItem!.children,
+            'type': _currentItem!.type,
+            'source': _currentItem!.source,
+            'lang': lang,
+          });
+        });
+      },
+      lang: lang,
     );
   }
 }

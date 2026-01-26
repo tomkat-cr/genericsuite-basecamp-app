@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // General date/time functions
 
@@ -35,51 +36,23 @@ String getTodayDateTime() {
   return getTimeStampFormatted();
 }
 
-// Misc
+// Browser launch
 
-String getValueToEdit(var itemValue, var defaultValue,
-    [Map<String, dynamic>? userData = const {}]) {
-  Map<String, dynamic> vars = {
-    'defaultValueString': defaultValue.toString(),
-    'itemValueString': itemValue.toString(),
-  };
-  for (var key in vars.keys) {
-    switch (vars[key]) {
-      case "CurrentUserId":
-      case "{CurrentUserId}":
-        vars[key] = userData!.containsKey('id') ? userData['id'] : vars[key];
-        break;
-      case 'current_timestamp':
-        vars[key] = getTimeStampFormatted();
-        break;
-      default:
-        break;
-    }
+Future<void> launchURLBrowser(String url) async {
+  // Parse the URL string into a Uri object
+  final Uri uri = Uri.parse(url);
+
+  // Check if the URL can be launched before attempting to do so
+  if (await canLaunchUrl(uri)) {
+    // Launch the URL in the external application (default browser)
+    await launchUrl(
+      uri,
+      mode: LaunchMode.externalApplication,
+    );
+  } else {
+    // Handle the case where the URL cannot be launched
+    throw 'Could not launch $url';
   }
-  return itemValue == null || vars['itemValueString'].isEmpty
-      ? vars['defaultValueString']
-      : vars['itemValueString'];
-}
-
-Map<String, dynamic> replaceSpecialVars(
-    Map<String, dynamic> params, Map<String, dynamic> currentUser) {
-  params.forEach((key, value) {
-    if (value == "{CurrentUserId}") {
-      params[key] = currentUser['id'];
-    }
-    if (value == "{current_timestamp}") {
-      params[key] = nowToTimestamp();
-    }
-  });
-  return params;
-}
-
-dynamic defaultValue(Map<String, dynamic> map, String key,
-    [dynamic defaultValue = ""]) {
-  if (map.containsKey(key)) {
-    return map[key];
-  }
-  return defaultValue;
 }
 
 // Log functions

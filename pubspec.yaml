@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.1+2
+version: 1.0.0+3
 
 environment:
   sdk: ^3.5.4
@@ -56,7 +56,7 @@ dev_dependencies:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/docs/images/gs_logo_circle.png"
+  image_path: "assets/docs_en/images/gs_logo_circle.png"
   min_sdk_android: 21 # android min sdk version
 
 # For information on the generic Dart part of this file, see the
@@ -73,43 +73,82 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
-    - assets/docs/
-    - assets/docs/Backend-Development/
-    - assets/docs/Backend-Development/GenericSuite-AI/
-    - assets/docs/Backend-Development/GenericSuite-Core/
-    - assets/docs/Backend-Development/GenericSuite-Scripts/
-    - assets/docs/Configuration-Guide/
-    - assets/docs/Frontend-Development/
-    - assets/docs/Frontend-Development/GenericSuite-AI/
-    - assets/docs/Frontend-Development/GenericSuite-Core/
-    - assets/docs/images/
-    - assets/docs/Other/
-    - assets/docs/Releases/
-    - assets/docs/Releases/images/
-    - assets/docs/Sample-Code/
-    - assets/docs/Sample-Code/exampleapp/
-    - assets/docs/Sample-Code/exampleapp/assets/
-    - assets/docs/Sample-Code/exampleapp/apps/
-    - assets/docs/Sample-Code/exampleapp/apps/api-chalice/
-    - assets/docs/Sample-Code/exampleapp/apps/api-fastapi/
-    - assets/docs/Sample-Code/exampleapp/apps/api-flask/
-    - assets/docs/Sample-Code/exampleapp/apps/config_dbdef/
-    - assets/docs/Sample-Code/exampleapp/apps/mcp-server/
-    - assets/docs/Sample-Code/exampleapp/apps/mcp-server/assets/
-    - assets/docs/Sample-Code/exampleapp/apps/ui/
-    - assets/docs/Sample-Code/exampleapp/apps/ui/public/
-    - assets/docs/Sample-Code/exampleapp/apps/ui/src/
-    - assets/docs/Sample-Code/exampleapp/apps/ui/src/_images/
-    - assets/docs/Sample-Code/exampleapp/packages/
-    - assets/docs/Sample-Code/exampleapp/packages/eslint-config/
-    - assets/docs/Sample-Code/fastapitemplate/
-    - assets/docs/Sample-Code/fastapitemplate/config_dbdef/
-    - assets/docs/Sample-Code/fastapitemplate/mcp-server/
-    - assets/docs/Sample-Code/fastapitemplate/server/
-    - assets/docs/Sample-Code/fastapitemplate/ui/
-    - assets/docs/Sample-Code/fastapitemplate/ui/public/
-    - assets/docs/Sample-Code/genericsuite-be-scripts/
-    - assets/docs/Sample-Code/genericsuite-configs/
+
+    - assets/docs_en/
+    - assets/docs_en/Backend-Development/
+    - assets/docs_en/Backend-Development/GenericSuite-AI/
+    - assets/docs_en/Backend-Development/GenericSuite-Core/
+    - assets/docs_en/Backend-Development/GenericSuite-Scripts/
+    - assets/docs_en/Configuration-Guide/
+    - assets/docs_en/Frontend-Development/
+    - assets/docs_en/Frontend-Development/GenericSuite-AI/
+    - assets/docs_en/Frontend-Development/GenericSuite-Core/
+    - assets/docs_en/images/
+    - assets/docs_en/Other/
+    - assets/docs_en/Releases/
+    - assets/docs_en/Releases/images/
+    - assets/docs_en/Sample-Code/
+    - assets/docs_en/Sample-Code/exampleapp/
+    - assets/docs_en/Sample-Code/exampleapp/assets/
+    - assets/docs_en/Sample-Code/exampleapp/apps/
+    - assets/docs_en/Sample-Code/exampleapp/apps/api-chalice/
+    - assets/docs_en/Sample-Code/exampleapp/apps/api-fastapi/
+    - assets/docs_en/Sample-Code/exampleapp/apps/api-flask/
+    - assets/docs_en/Sample-Code/exampleapp/apps/config_dbdef/
+    - assets/docs_en/Sample-Code/exampleapp/apps/mcp-server/
+    - assets/docs_en/Sample-Code/exampleapp/apps/mcp-server/assets/
+    - assets/docs_en/Sample-Code/exampleapp/apps/ui/
+    - assets/docs_en/Sample-Code/exampleapp/apps/ui/public/
+    - assets/docs_en/Sample-Code/exampleapp/apps/ui/src/
+    - assets/docs_en/Sample-Code/exampleapp/apps/ui/src/_images/
+    - assets/docs_en/Sample-Code/exampleapp/packages/
+    - assets/docs_en/Sample-Code/exampleapp/packages/eslint-config/
+    - assets/docs_en/Sample-Code/fastapitemplate/
+    - assets/docs_en/Sample-Code/fastapitemplate/config_dbdef/
+    - assets/docs_en/Sample-Code/fastapitemplate/mcp-server/
+    - assets/docs_en/Sample-Code/fastapitemplate/server/
+    - assets/docs_en/Sample-Code/fastapitemplate/ui/
+    - assets/docs_en/Sample-Code/fastapitemplate/ui/public/
+    - assets/docs_en/Sample-Code/genericsuite-be-scripts/
+    - assets/docs_en/Sample-Code/genericsuite-configs/
+
+    - assets/docs_es/
+    - assets/docs_es/Backend-Development/
+    - assets/docs_es/Backend-Development/GenericSuite-AI/
+    - assets/docs_es/Backend-Development/GenericSuite-Core/
+    - assets/docs_es/Backend-Development/GenericSuite-Scripts/
+    - assets/docs_es/Configuration-Guide/
+    - assets/docs_es/Frontend-Development/
+    - assets/docs_es/Frontend-Development/GenericSuite-AI/
+    - assets/docs_es/Frontend-Development/GenericSuite-Core/
+    - assets/docs_es/images/
+    - assets/docs_es/Other/
+    - assets/docs_es/Releases/
+    - assets/docs_es/Releases/images/
+    - assets/docs_es/Sample-Code/
+    - assets/docs_es/Sample-Code/exampleapp/
+    - assets/docs_es/Sample-Code/exampleapp/assets/
+    - assets/docs_es/Sample-Code/exampleapp/apps/
+    - assets/docs_es/Sample-Code/exampleapp/apps/api-chalice/
+    - assets/docs_es/Sample-Code/exampleapp/apps/api-fastapi/
+    - assets/docs_es/Sample-Code/exampleapp/apps/api-flask/
+    - assets/docs_es/Sample-Code/exampleapp/apps/config_dbdef/
+    - assets/docs_es/Sample-Code/exampleapp/apps/mcp-server/
+    - assets/docs_es/Sample-Code/exampleapp/apps/mcp-server/assets/
+    - assets/docs_es/Sample-Code/exampleapp/apps/ui/
+    - assets/docs_es/Sample-Code/exampleapp/apps/ui/public/
+    - assets/docs_es/Sample-Code/exampleapp/apps/ui/src/
+    - assets/docs_es/Sample-Code/exampleapp/apps/ui/src/_images/
+    - assets/docs_es/Sample-Code/exampleapp/packages/
+    - assets/docs_es/Sample-Code/exampleapp/packages/eslint-config/
+    - assets/docs_es/Sample-Code/fastapitemplate/
+    - assets/docs_es/Sample-Code/fastapitemplate/config_dbdef/
+    - assets/docs_es/Sample-Code/fastapitemplate/mcp-server/
+    - assets/docs_es/Sample-Code/fastapitemplate/server/
+    - assets/docs_es/Sample-Code/fastapitemplate/ui/
+    - assets/docs_es/Sample-Code/fastapitemplate/ui/public/
+    - assets/docs_es/Sample-Code/genericsuite-be-scripts/
+    - assets/docs_es/Sample-Code/genericsuite-configs/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

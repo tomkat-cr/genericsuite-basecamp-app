@@ -5,7 +5,7 @@
 # Create virtual environment and install dependencies
 if [ ! -d ".venv" ]; then
     python3 -m venv .venv
-    .venv/bin/pip install pyyaml
+    .venv/bin/pip install pyyaml openai
 fi
 
 # Update the git module
@@ -19,6 +19,14 @@ else
     git pull
     cd ..
 fi
+
+# Load .env
+if [ ! -f ".env" ]; then
+    cp .env.example .env
+fi
+set -a
+source ./.env
+set +a
 
 # Run the converter
 .venv/bin/python3 scripts/docs_converter.py --repo_path ./genericsuite-basecamp

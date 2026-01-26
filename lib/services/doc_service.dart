@@ -25,13 +25,14 @@ class DocService {
   }
 
   // Helper to find the first page to show (e.g., if home is a section)
-  DocManifestItem? getFirstPage([List<DocManifestItem>? items]) {
+  DocManifestItem? getFirstPage(
+      [String lang = 'en', List<DocManifestItem>? items]) {
     final list = items ?? _manifest;
     for (var item in list) {
-      if (item.type == 'page') {
+      if (item.type == 'page' && item.lang == lang) {
         return item;
       } else if (item.children != null) {
-        final childPage = getFirstPage(item.children);
+        final childPage = getFirstPage(lang, item.children);
         if (childPage != null) return childPage;
       }
     }
