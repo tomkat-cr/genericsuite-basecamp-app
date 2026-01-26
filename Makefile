@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := local
-.PHONY: help install update update_documentation qa build build_local run clean
+.PHONY: help install update update_documentation qa build build_local run clean clean_rm clean_temp_dir clean_logs clean_build
 SHELL := /bin/bash
 
 ## General Commands
@@ -17,10 +17,11 @@ update:
 
 ## Cleaning
 
-clean: clean_rm clean_temp_dir clean_logs unbuild 
+clean: clean_rm clean_temp_dir clean_logs clean_build 
 
 clean_rm:
-	rm -rf build/* build/.*
+	rm -rf build
+	mkdir build
 
 clean_temp_dir:
 	rm -rf .dart_tool
@@ -28,8 +29,8 @@ clean_temp_dir:
 clean_logs:
 	rm -rf logs/
 
-clean_build: unbuild
-	
+clean_build:
+	flutter clean && cd android && ./gradlew clean && cd -
 
 fresh: clean install
 
@@ -52,7 +53,7 @@ update_documentation:
 test:
 	# TODO: implement flutter test	
 
-## Development Commands
+## Build
 
 qa: test
 
@@ -62,28 +63,64 @@ build:
 build_local:
 	flutter build apk --debug
 
-build_bundle:
-	rm -rf build/app/outputs/bundle/release/app-release.aab && \
-	flutter build appbundle --release && \
-	cd build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/ && \
-	zip -r ../../../../../../../outputs/bundle/release/native-debug-symbols.zip . && \
-	cd - && \
-	ls -lh build/app/outputs/bundle/release/app-release.aab && \
+build_bundle_rm_init:
+	@echo ""
+	@echo "Starting bundle creation process... removing previous build"
+	@echo ""
+	rm -rf build
+	mkdir build
+
+build_bundle_flutter_build:
+	@echo ""
+	@echo "Building bundle to upload to Play Store..."
+	@echo ""
+	flutter build appbundle --release
+
+build_bundle_zip:
+	@echo ""
+	@echo "Zipping native libs to upload as debug symbols to Play Store..."
+	@echo ""
+	zip -r build/app/outputs/bundle/release/native-debug-symbols.zip build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib/
+
+build_bundle_ls:
+	@echo ""
+	@echo "Bundle size:"
+	@echo ""
+	ls -lh build/app/outputs/bundle/release/app-release.aab
 	ls -lh build/app/outputs/bundle/release/native-debug-symbols.zip
 
-generate_keystore:	
+build_bundle_finished:
+	@echo ""
+	@echo "Bundle creation finished."
+	@echo ""
+
+build_bundle: build_bundle_rm_init build_bundle_flutter_build build_bundle_zip build_bundle_ls build_bundle_finished
+
+publish: build_bundle
+
+generate_keystore:
 	keytool -genkey -v -keystore ${HOME}/.ssh/upload-keystore.jks \
         -storetype JKS -keyalg RSA -keysize 2048 -validity 10000 \
         -alias upload
 
-unbuild:
-	flutter clean && cd android && ./gradlew clean && cd -
+sign_apk:
+	flutter build apk --release --keystore=${HOME}/.ssh/upload-keystore.jks --keystore-password=${PASSWORD} --key-alias=upload --key-password=${PASSWORD}
+
+sign_bundle:
+	flutter build appbundle --release --keystore=${HOME}/.ssh/upload-keystore.jks --keystore-password=${PASSWORD} --key-alias=upload --key-password=${PASSWORD}
+
+generate_icons:
+	flutter pub get && flutter pub run flutter_launcher_icons:main
+
+create_android_avd:
+	 # ${HOME}/Library/Android/sdk/cmdline-tools/latest/bin/sdkmanager "system-images;android-27;google_apis_playstore;x86"
+	 ${HOME}/Library/Android/sdk/cmdline-tools/latest/bin/sdkmanager "system-images;android-34;google_apis_playstore;arm64-v8a"
 
 ## Deployment
 
 deploy_local: build_local
 
-deploy_prod: build
+deploy_prod: build_bundle
 
 deploy: deploy_prod
 

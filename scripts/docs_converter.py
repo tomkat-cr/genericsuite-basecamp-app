@@ -170,6 +170,8 @@ def main():
                         {"title": title, "path": final_file, "type": "page",
                          "source": "external"})
                     files_processed.append(final_file)
+                else:
+                    files_processed.append(rel_path)
 
     manifest_path = os.path.join(
         os.path.dirname(dest_dir), "docs_manifest.json")

@@ -17,52 +17,55 @@ class DocDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      width: 280,
       child: Column(
         children: [
-          DrawerHeader(
-            // padding: const EdgeInsets.only(
-            //     top: 5.0, bottom: 5.0, left: 5.0, right: 5.0),
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.only(
+              top: MediaQuery.paddingOf(context).top + 2.0,
+              left: 15.0,
+              bottom: 17.0,
+            ),
             decoration: BoxDecoration(
               color: Theme.of(context).primaryColor,
             ),
-            child: Container(
-              alignment: Alignment.topLeft,
-              child: const Row(
-                // mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Image(
-                    width: 70,
-                    height: 70,
-                    image:
-                        AssetImage('assets/docs/images/gs_ai_logo_circle.png'),
-                  ),
-                  Text(' '),
-                  Column(
-                    children: [
-                      Text(
-                        'GenericSuite',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                        ),
+            child: const Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Image(
+                  width: 90,
+                  height: 90,
+                  image: AssetImage('assets/docs/images/gs_ai_logo_circle.png'),
+                ),
+                SizedBox(width: 12),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'GenericSuite',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
                       ),
-                      Text(
-                        'Documentation',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                        ),
+                    ),
+                    Text(
+                      'Documentation',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16.5,
                       ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
           Expanded(
             child: ListView(
+              padding: const EdgeInsets.only(top: 5.0, left: 5.0, bottom: 5.0),
+              shrinkWrap: true,
               children: manifest
                   .where((item) => item.source == 'nav')
                   .map((item) => _buildItem(item, context))

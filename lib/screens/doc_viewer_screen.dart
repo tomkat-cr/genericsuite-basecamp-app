@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:url_launcher/url_launcher.dart';
 
 import '../models/doc_manifest.dart';
+import '../services/fontawesome_service.dart';
 import '../services/utilities.dart';
 import 'doc_drawer.dart';
 
@@ -48,20 +49,26 @@ class _DocViewerScreenState extends State<DocViewerScreen> {
   String? _markdownContent;
   String? _currentPath;
   bool _isLoading = false;
-  ScrollController _scrollController = ScrollController();
+  DocManifestItem? _previousItem;
+  late bool _firstTime = true;
+  final ScrollController _scrollController = ScrollController();
   final Map<String, GlobalKey> _anchorKeys = {};
+  final Map<String, AnchorHeaderBuilder> _builders = {};
 
   @override
   void didUpdateWidget(DocViewerScreen oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.initialItem != oldWidget.initialItem) {
+      _previousItem = oldWidget.initialItem;
       _loadContent();
+      _firstTime = false;
     }
   }
 
   @override
   void initState() {
     super.initState();
+    _firstTime = true;
     _loadContent();
   }
 
@@ -71,15 +78,27 @@ class _DocViewerScreenState extends State<DocViewerScreen> {
     super.dispose();
   }
 
-  String _getPath(dynamic path, [String basePath = '']) {
-    path = path.toString();
-    if (basePath.isEmpty) {
-      return path;
+  String _getPath(dynamic originalPath, [String basePath = '']) {
+    String path = originalPath.toString();
+    path = path.replaceAll('%20', ' ');
+    String currentBasePath = basePath;
+    if (path.startsWith('./') || path.startsWith('../')) {
+      for (int i = 0; i < path.split('/').length - 1; i++) {
+        if (path.startsWith('./')) {
+          path = path.substring(2);
+          break;
+        }
+        if (path.startsWith('../')) {
+          currentBasePath = _getParentPath(currentBasePath);
+          path = path.substring(3);
+        }
+      }
+      path = '$currentBasePath${currentBasePath.isNotEmpty ? '/' : ''}$path';
     }
-    path = path.startsWith('../')
-        ? '${_getParentPath(basePath)}/${path.substring(3)}'
-        : path;
-    path = path.startsWith('./') ? '$basePath/${path.substring(2)}' : path;
+    if (debug) {
+      logDebug(
+          'DocViewerScreen | _getPath | originalPath: $originalPath | basePath: $basePath | currentBasePath: $currentBasePath | Final path: $path');
+    }
     return path;
   }
 
@@ -99,13 +118,29 @@ class _DocViewerScreenState extends State<DocViewerScreen> {
       logDebug(
           'DocViewerScreen | _getFileContent | path: $path | basePath: $basePath');
     }
-    basePath = basePath.isEmpty ? '' : '$basePath/';
     dynamic content;
+    String fullPath = _getPath(path, basePath);
+    if (fullPath.contains('#')) {
+      fullPath = fullPath.substring(0, fullPath.indexOf('#'));
+      if (debug) {
+        logDebug('DocViewerScreen | New path: $fullPath');
+      }
+    }
+
     try {
-      path = _getPath(path, basePath);
-      content = await rootBundle.loadString('assets/docs/$path');
+      content = await rootBundle.loadString('assets/docs/$fullPath');
     } catch (e) {
-      logError('$contentLoadError File "$path". Error: $e \n[DVS-E-010]');
+      // Try adding .md if it's missing
+      if (!fullPath.endsWith('.md')) {
+        try {
+          content = await rootBundle.loadString('assets/docs/$fullPath.md');
+        } catch (e2) {
+          logError(
+              '$contentLoadError File "$fullPath.md" (or .md). Error: $e \n[GFC-E-010]');
+        }
+      } else {
+        logError('$contentLoadError File "$fullPath". Error: $e \n[GFC-E-020]');
+      }
     }
     return content;
   }
@@ -147,10 +182,22 @@ class _DocViewerScreenState extends State<DocViewerScreen> {
     }
   }
 
-  @override
-  @override
-  Widget build(BuildContext context) {
+  String replaceBr(String content) {
+    content = content.replaceAll('<BR/>', '\n');
+    content = content.replaceAll('<BR>', '\n');
+    content = content.replaceAll('<br/>', '\n');
+    content = content.replaceAll('<br>', '\n');
+    return content;
+  }
+
+  String transformContent(String content) {
+    return preprocessMarkdownIcons(replaceBr(content));
+  }
+
+  void _buildAnchors() {
     // Search for anchors in markdown content
+    _anchorKeys.clear();
+    _builders.clear();
     (_markdownContent ?? '').split('\n').forEach((line) {
       if (line.startsWith('#')) {
         String anchor = line.split('#').last.trim();
@@ -164,147 +211,210 @@ class _DocViewerScreenState extends State<DocViewerScreen> {
         _anchorKeys[anchor] = GlobalKey();
       }
     });
+    for (var key in _anchorKeys.keys) {
+      _builders[key] = AnchorHeaderBuilder(_anchorKeys);
+    }
     if (debug) {
       logDebug('DocViewerScreen | _anchorKeys: ${_anchorKeys.toString()}');
     }
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    _buildAnchors();
     return Scaffold(
       appBar: AppBar(
+        // Back button (go to the previous visited page)
+        leading: _firstTime
+            ? null
+            : IconButton(
+                icon: const Icon(Icons.arrow_back_ios_new),
+                onPressed: () {
+                  if (_previousItem != null) {
+                    widget.onPageChanged(_previousItem!);
+                  }
+                }),
         title: Text(widget.initialItem?.title ?? 'Documentation'),
       ),
-      drawer: DocDrawer(
+      // Drawer (menu at the right side with the documentation index)
+      endDrawer: DocDrawer(
         manifest: widget.manifest,
         selectedItem: widget.initialItem,
         onItemSelected: widget.onPageChanged,
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
-          : Markdown(
+          : ListView(
+              // Show documentation content
+              padding: const EdgeInsets.all(10.0),
               controller: _scrollController,
-              data: _markdownContent ?? '',
-              selectable: true,
-              imageDirectory:
-                  'https://raw.githubusercontent.com/tomkat-cr/genericsuite-basecamp/main/docs/', // Basic fallback for external images if not in assets? Or use assets?
-
-              // TODO: add imageDirectory for local assets
-              // For local assets, we need a custom image builder or ensure paths are relative to asset root?
-              // flutter_markdown handles asset images if resource starts with resource: or similar?
-              // Actually, simplified: local assets are best referenced by proper asset path.
-              // But converted files might have relative paths like ../images/img.png.
-              // We might need an imageBuilder to resolve these.
-
-              // TODO: fix the anchors link
-              // Let's assume standard markdown links for now.
-              // builders: {
-              //   'h1': HeaderBuilder(_anchorKeys),
-              //   'h2': HeaderBuilder(_anchorKeys),
-              //   'h3': HeaderBuilder(_anchorKeys),
-              //   'h4': HeaderBuilder(_anchorKeys),
-              //   'h5': HeaderBuilder(_anchorKeys),
-              //   'h6': HeaderBuilder(_anchorKeys),
-              // },
-              onTapLink: (text, href, title) async {
-                if (href == null) {
-                  return;
-                }
-                if (href.startsWith('http')) {
-                  // Open external link
-                  if (debug) {
-                    logDebug('DocViewerScreen | href: $href');
-                  }
-                  try {
-                    await launchURLBrowser(href);
-                  } catch (e) {
-                    logError('DocViewerScreen | Error: $e');
-                  }
-                } else if (href.startsWith('#')) {
-                  // Scroll to anchor
-                  final anchor = href.substring(1);
-                  if (debug) {
-                    logDebug('DocViewerScreen | Scrolling to anchor: $anchor');
-                  }
-                  final key = _anchorKeys[anchor];
-                  if (key != null) {
-                    if (key.currentContext != null) {
-                      Scrollable.ensureVisible(
-                        key.currentContext!,
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                      );
+              children: <Widget>[
+                MarkdownBody(
+                  data: _markdownContent != null
+                      ? transformContent(_markdownContent!)
+                      : '--No content--',
+                  selectable: true,
+                  imageBuilder: (uri, title, alt) {
+                    String path = uri.toString();
+                    String parentPath = _getParentPath(_currentPath ?? "");
+                    String assetPath = '';
+                    dynamic image;
+                    if (path.startsWith('http')) {
+                      image = Image.network(path, semanticLabel: alt);
                     } else {
-                      if (debug) {
-                        logDebug(
-                            'DocViewerScreen | Key found but context is null for'
-                            ' anchor: $anchor. Widget might be disposed or off-screen.');
+                      // Resolve relative path to assets
+                      if (!path.startsWith('./') &&
+                          !path.startsWith('../') &&
+                          !path.startsWith('/') &&
+                          parentPath.isNotEmpty) {
+                        path = './$path';
+                      }
+                      assetPath = 'assets/docs/${_getPath(path, parentPath)}';
+                      try {
+                        image = Image.asset(assetPath, semanticLabel: alt);
+                      } catch (e) {
+                        logError(
+                            'DocViewerScreen | imageBuilder | path: $path | '
+                            'currentPath: $_currentPath | assetPath: $assetPath | Error: $e');
+                        image = Text('Image not found: $assetPath',
+                            style: const TextStyle(color: Colors.red));
                       }
                     }
-                  } else {
                     if (debug) {
-                      logDebug(
-                          'DocViewerScreen | Anchor key not found for: $anchor');
+                      logDebug('DocViewerScreen | imageBuilder | path: $path | '
+                          'currentPath: $_currentPath | assetPath: $assetPath');
                     }
-                  }
-                } else {
-                  // Open link
-                  if (debug) {
-                    logDebug('DocViewerScreen | href: $href');
-                    logDebug(
-                        'DocViewerScreen | manifest: ${widget.manifest.toString()}');
-                  }
-                  dynamic item;
-                  for (var element in widget.manifest) {
-                    if (element.children != null) {
-                      for (var child in element.children!) {
-                        if (child.path == href) {
-                          item = child;
-                          break;
+                    return image;
+                  },
+                  // TODO: fix the anchors link
+                  // Let's assume standard markdown links for now.
+                  builders: _builders,
+                  // builders: {
+                  //   'h1': AnchorHeaderBuilder(_anchorKeys),
+                  //   'h2': AnchorHeaderBuilder(_anchorKeys),
+                  //   'h3': AnchorHeaderBuilder(_anchorKeys),
+                  //   'h4': AnchorHeaderBuilder(_anchorKeys),
+                  //   'h5': AnchorHeaderBuilder(_anchorKeys),
+                  //   'h6': AnchorHeaderBuilder(_anchorKeys),
+                  // },
+                  onTapLink: (text, href, title) async {
+                    if (href == null) {
+                      return;
+                    }
+                    if (href.startsWith('http')) {
+                      // Open external link
+                      if (debug) {
+                        logDebug('DocViewerScreen | href: $href');
+                      }
+                      try {
+                        await launchURLBrowser(href);
+                      } catch (e) {
+                        logError('DocViewerScreen | Error: $e');
+                      }
+                    } else if (href.startsWith('#')) {
+                      // Scroll to anchor
+                      final anchor = href.substring(1);
+                      if (debug) {
+                        logDebug(
+                            'DocViewerScreen | Scrolling to anchor: $anchor | _anchorKeys: ${_anchorKeys.toString()}');
+                      }
+                      final key = _anchorKeys[anchor];
+                      if (key != null) {
+                        if (debug) {
+                          logDebug('DocViewerScreen | key!: $key');
+                        }
+                        if (key.currentContext != null) {
+                          if (debug) {
+                            logDebug(
+                                'DocViewerScreen | key.currentContext!: ${key.currentContext}');
+                          }
+                          Scrollable.ensureVisible(
+                            key.currentContext!,
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                          );
+                        } else {
+                          logError(
+                              'DocViewerScreen | Key found but context is null for'
+                              ' anchor: $anchor. Widget might be disposed or off-screen.');
+                        }
+                      } else {
+                        if (debug) {
+                          logDebug(
+                              'DocViewerScreen | Anchor key not found for: $anchor');
                         }
                       }
                     } else {
-                      if (element.path == href) {
-                        item = element;
-                        break;
+                      // Open link
+                      if (debug) {
+                        logDebug('DocViewerScreen | href: $href');
+                        logDebug(
+                            'DocViewerScreen | manifest: ${widget.manifest.toString()}');
+                      }
+                      dynamic item;
+                      for (var element in widget.manifest) {
+                        if (element.children != null) {
+                          for (var child in element.children!) {
+                            if (child.path == href) {
+                              item = child;
+                              break;
+                            }
+                          }
+                        } else {
+                          if (element.path == href) {
+                            item = element;
+                            break;
+                          }
+                        }
+                      }
+                      if (debug) {
+                        logDebug('DocViewerScreen | FOUND item: $item');
+                      }
+                      if (item != null) {
+                        widget.onPageChanged(item);
+                      } else {
+                        String resolvedPath =
+                            _getPath(href, _getParentPath(_currentPath));
+                        dynamic content = await _getFileContent(resolvedPath);
+
+                        if (content != null) {
+                          // Standardize path - ensure it uses the full resolved path
+                          String path = resolvedPath.endsWith('.md')
+                              ? resolvedPath
+                              : '$resolvedPath.md';
+
+                          // Get the title from the first line
+                          String title = content.split('\n').first;
+                          title = title.replaceAll('#', '').trim();
+                          if (title.isEmpty) title = href.split('/').last;
+
+                          item = DocManifestItem.fromJson({
+                            'path': path,
+                            'title': title,
+                            'children': null,
+                            'type': 'file',
+                            'source': 'calculated',
+                          });
+                          widget.onPageChanged(item);
+                        }
                       }
                     }
-                  }
-                  if (debug) {
-                    logDebug('DocViewerScreen | FOUND item: $item');
-                  }
-                  if (item != null) {
-                    widget.onPageChanged(item);
-                  } else {
-                    dynamic content = await _getFileContent(
-                        href, _getParentPath(_currentPath));
-
-                    if (content != null) {
-                      // Get the title from the fist line
-                      String title = content.split('\n').first;
-                      title = title.split('#').last;
-                      final path = _getPath(href, _getParentPath(_currentPath));
-                      item = DocManifestItem.fromJson({
-                        'path': path,
-                        'title': title,
-                        'children': null,
-                        'type': 'file',
-                        'source': 'calculated',
-                      });
-                      widget.onPageChanged(item);
+                    if (debug) {
+                      logDebug('DocViewerScreen | Link tapped: $href');
                     }
-                  }
-                }
-                if (debug) {
-                  logDebug('DocViewerScreen | Link tapped: $href');
-                }
-              },
+                  },
+                ),
+                const SizedBox(height: 40),
+              ],
             ),
     );
   }
 }
 
-class HeaderBuilder extends MarkdownElementBuilder {
+class AnchorHeaderBuilder extends MarkdownElementBuilder {
   final Map<String, GlobalKey> anchorKeys;
 
-  HeaderBuilder(this.anchorKeys);
+  AnchorHeaderBuilder(this.anchorKeys);
 
   @override
   Widget? visitElementAfter(md.Element element, TextStyle? preferredStyle) {

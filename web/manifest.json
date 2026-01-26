@@ -1,6 +1,6 @@
 {
-    "name": "gs_docs_viewer",
-    "short_name": "gs_docs_viewer",
+    "name": "gsdoc",
+    "short_name": "gsdoc",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -1,5 +1,5 @@
-name: gs_docs_viewer
-description: "GenericSuite Documentation Viewer"
+name: gsdoc
+description: "GenericSuite Documentation"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.0+1
+version: 1.0.1+2
 
 environment:
   sdk: ^3.5.4
@@ -31,16 +31,15 @@ dependencies:
   flutter:
     sdk: flutter
 
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
-  flutter_markdown: ^0.7.7+1
   provider: ^6.1.5+1
   google_fonts: ^6.3.0
   url_launcher: ^6.3.1
   markdown: ^7.3.0
   intl: ^0.20.2
+  flutter_markdown_plus: ^1.0.7
 
 dev_dependencies:
   flutter_test:
@@ -80,7 +79,6 @@ flutter:
     - assets/docs/Backend-Development/GenericSuite-Core/
     - assets/docs/Backend-Development/GenericSuite-Scripts/
     - assets/docs/Configuration-Guide/
-    # - assets/docs/documents/
     - assets/docs/Frontend-Development/
     - assets/docs/Frontend-Development/GenericSuite-AI/
     - assets/docs/Frontend-Development/GenericSuite-Core/
@@ -90,10 +88,28 @@ flutter:
     - assets/docs/Releases/images/
     - assets/docs/Sample-Code/
     - assets/docs/Sample-Code/exampleapp/
+    - assets/docs/Sample-Code/exampleapp/assets/
+    - assets/docs/Sample-Code/exampleapp/apps/
+    - assets/docs/Sample-Code/exampleapp/apps/api-chalice/
+    - assets/docs/Sample-Code/exampleapp/apps/api-fastapi/
+    - assets/docs/Sample-Code/exampleapp/apps/api-flask/
+    - assets/docs/Sample-Code/exampleapp/apps/config_dbdef/
+    - assets/docs/Sample-Code/exampleapp/apps/mcp-server/
+    - assets/docs/Sample-Code/exampleapp/apps/mcp-server/assets/
+    - assets/docs/Sample-Code/exampleapp/apps/ui/
+    - assets/docs/Sample-Code/exampleapp/apps/ui/public/
+    - assets/docs/Sample-Code/exampleapp/apps/ui/src/
+    - assets/docs/Sample-Code/exampleapp/apps/ui/src/_images/
+    - assets/docs/Sample-Code/exampleapp/packages/
+    - assets/docs/Sample-Code/exampleapp/packages/eslint-config/
     - assets/docs/Sample-Code/fastapitemplate/
+    - assets/docs/Sample-Code/fastapitemplate/config_dbdef/
+    - assets/docs/Sample-Code/fastapitemplate/mcp-server/
+    - assets/docs/Sample-Code/fastapitemplate/server/
+    - assets/docs/Sample-Code/fastapitemplate/ui/
+    - assets/docs/Sample-Code/fastapitemplate/ui/public/
     - assets/docs/Sample-Code/genericsuite-be-scripts/
     - assets/docs/Sample-Code/genericsuite-configs/
-    # - assets/docs/stylesheets/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

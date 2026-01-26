@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+
 import 'models/doc_manifest.dart';
-import 'services/doc_service.dart';
 import 'screens/doc_viewer_screen.dart';
+import 'services/doc_service.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const GsDoc());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class GsDoc extends StatelessWidget {
+  const GsDoc({super.key});
 
   @override
   Widget build(BuildContext context) {

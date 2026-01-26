@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.genericsuite" "\0"
-            VALUE "FileDescription", "gs_docs_viewer" "\0"
+            VALUE "FileDescription", "gsdoc" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "gs_docs_viewer" "\0"
+            VALUE "InternalName", "gsdoc" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2026 com.genericsuite. All rights reserved." "\0"
-            VALUE "OriginalFilename", "gs_docs_viewer.exe" "\0"
-            VALUE "ProductName", "gs_docs_viewer" "\0"
+            VALUE "OriginalFilename", "gsdoc.exe" "\0"
+            VALUE "ProductName", "gsdoc" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
