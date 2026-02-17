@@ -45,6 +45,9 @@ install_tools:
 	export PATH=$PATH:"${HOME}/flutter/bin"
 	flutter pub global activate
 
+translate_uncommitted:
+	sh scripts/translate_uncommitted.sh
+
 update_documentation:
 	sh scripts/run_docs_converter.sh
 

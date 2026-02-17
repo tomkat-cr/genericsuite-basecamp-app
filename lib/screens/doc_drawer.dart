@@ -79,17 +79,17 @@ class _DocDrawerState extends State<DocDrawer> {
             decoration: BoxDecoration(
               color: Theme.of(context).primaryColor,
             ),
-            child: Row(
+            child: const Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Image(
                   width: 90,
                   height: 90,
                   image: AssetImage(
-                      'assets/docs_$lang/images/gs_ai_logo_circle.png'),
+                      'assets/docs/assets/images/gs_ai_logo_circle.png'),
                 ),
-                const SizedBox(width: 12),
-                const Column(
+                SizedBox(width: 12),
+                Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

@@ -21,9 +21,20 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ## [1.0.0+3] - 2026-01-25
 
 ### Added
-- Add Spanish docs, using Google Translate and OpenAI, thanks to @otobonh [GS-252].
-- Add language selection in the app menu [GS-252].
-- Add back button to go back to the previous page [GS-252].
+- Spanish docs, using Google Translate and OpenAI gpt-5-nano, thanks to @otobonh [GS-252].
+- Language selection in the app menu [GS-252].
+- Back button to go back to the previous page [GS-252].
+- "getLangForApp" function to get the configured device language [GS-252].
+- "make translate_uncommitted" command to translate uncommitted changes in the `genericsuite_basecamp/docs` directory [GS-252].
+
+### Changed
+- Refactor documentation conversion process [GS-252]:
+    - Convert all separated functions to a single class DocsConverter
+    - Turn off translatiion by default (self.translation = False)
+    - Add a "--translation" parameter to enable translation
+    - Add ignore files paths
+    - Change "assets/docs_en" to "assets/docs/en", and "assets/docs_es" to "assets/docs/es", following the multi-language support addition to genericsuite_basecamp
+- Update documentation asset paths and image resolution, following the multi-language support addition to genericsuite_basecamp [GS-252]
 
 ### Fixed
 - Remove <BR/> before show the content [GS-252].

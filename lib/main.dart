@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'models/doc_manifest.dart';
 import 'screens/doc_viewer_screen.dart';
 import 'services/doc_service.dart';
+import 'services/utilities.dart';
 
 void main() {
   runApp(const GsDoc());
@@ -59,7 +60,7 @@ class _AppHomeState extends State<AppHome> {
   @override
   void initState() {
     super.initState();
-    lang = 'en';
+    lang = getLangForApp();
     _init();
   }
 

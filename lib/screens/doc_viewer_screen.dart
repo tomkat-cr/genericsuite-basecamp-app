@@ -120,13 +120,13 @@ class _DocViewerScreenState extends State<DocViewerScreen> {
     }
 
     try {
-      content = await rootBundle.loadString('assets/docs_$lang/$fullPath');
+      content = await rootBundle.loadString('assets/docs/$lang/$fullPath');
     } catch (e) {
       // Try adding .md if it's missing
       if (!fullPath.endsWith('.md')) {
         try {
           content =
-              await rootBundle.loadString('assets/docs_$lang/$fullPath.md');
+              await rootBundle.loadString('assets/docs/$lang/$fullPath.md');
         } catch (e2) {
           logError(
               '$contentLoadError File "$fullPath.md" (or .md). Error: $e \n[GFC-E-010]');
@@ -260,23 +260,41 @@ class _DocViewerScreenState extends State<DocViewerScreen> {
                     String assetPath = '';
                     dynamic image;
                     if (path.startsWith('http')) {
+                      logDebug(
+                          'DocViewerScreen [0] | imageBuilder | path: $path | assetPath: $assetPath');
                       image = Image.network(path, semanticLabel: alt);
                     } else {
                       // Resolve relative path to assets
                       if (!path.startsWith('./') &&
-                          !path.startsWith('../') &&
+                          !path.contains('../') &&
                           !path.startsWith('/') &&
                           parentPath.isNotEmpty) {
-                        path = './$path';
+                        if (path.contains('../assets/images/')) {
+                          path = path.split('../assets/images/').last;
+                          assetPath = 'assets/docs/assets/images/$path';
+                          logDebug(
+                              'DocViewerScreen [1] | imageBuilder | path: $path | assetPath: $assetPath');
+                        } else {
+                          path = './$path';
+                          assetPath =
+                              'assets/docs/$lang/${_getPath(path, parentPath)}';
+                          logDebug(
+                              'DocViewerScreen [2] | imageBuilder | path: $path | assetPath: $assetPath');
+                        }
+                      } else {
+                        assetPath = 'assets/docs/${_getPath(path, parentPath)}';
+                        logDebug(
+                            'DocViewerScreen [3] | imageBuilder | path: $path | assetPath: $assetPath');
                       }
-                      assetPath =
-                          'assets/docs_$lang/${_getPath(path, parentPath)}';
+                      logDebug(
+                          'DocViewerScreen [4] | imageBuilder | path: $path | assetPath: $assetPath');
                       try {
                         image = Image.asset(assetPath, semanticLabel: alt);
                       } catch (e) {
                         logError(
                             'DocViewerScreen | imageBuilder | path: $path | '
                             'currentPath: $_currentPath | assetPath: $assetPath | Error: $e');
+
                         image = Text('Image not found: $assetPath',
                             style: const TextStyle(color: Colors.red));
                       }

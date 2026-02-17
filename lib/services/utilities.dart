@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -71,4 +72,30 @@ Future<void> logWarning(String message) async {
 
 Future<void> logError(String message) async {
   log("[ERROR] ${getDateTime()} - $message");
+}
+
+// Device specific functions
+
+String getDeviceCurrentLanguage() {
+  // Get the system's primary preferred locale
+  final systemLocale = WidgetsBinding.instance.platformDispatcher.locale;
+
+  // Extract the language code
+  final languageCode = systemLocale.languageCode;
+
+  logDebug('System Language Code: $languageCode');
+
+  return languageCode;
+}
+
+String getLangForApp() {
+  String lang = getDeviceCurrentLanguage();
+  if (lang.startsWith('es')) {
+    return 'es';
+  }
+  if (lang.startsWith('en')) {
+    return 'en';
+  }
+  // Default to English for any other language
+  return 'en';
 }
