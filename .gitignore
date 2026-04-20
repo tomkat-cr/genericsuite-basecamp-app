@@ -43,3 +43,6 @@ assets/docs/code/
 !assets/docs/assets/images/gs_ai_logo_circle.png
 !assets/docs/assets/images/gs_logo_circle.png
 __pycache__
+
+# Claude Code
+.claude/settings.local.json

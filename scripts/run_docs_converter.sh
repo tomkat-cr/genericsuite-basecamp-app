@@ -9,15 +9,33 @@ if [ ! -d ".venv" ]; then
 fi
 
 # Update the git module
-if [ ! -d "./genericsuite-basecamp" ]; then
-    git submodule add https://github.com/tomkat-cr/genericsuite-basecamp.git genericsuite-basecamp
-    cd genericsuite-basecamp
-    git checkout main
-    cd ..
-else
-    cd genericsuite-basecamp
-    git pull
-    cd ..
+if [ "${GS_BASECAMP_PATH}" = "" ]; then
+    GS_BASECAMP_REPO_URL="https://github.com/tomkat-cr/genericsuite-basecamp"
+    GS_BASECAMP_PATH="./genericsuite-basecamp"
+    BRANCH="${BRANCH:-develop}" # main or develop (default)
+    SUBMODULE="${SUBMODULE:-0}" # 1 = add submodule, 0 = clone repository (default)
+    if [ ! -d "${GS_BASECAMP_PATH}" ]; then
+        if [ "${SUBMODULE}" = "1" ]; then
+            if ! git submodule add "${GS_BASECAMP_REPO_URL}.git" "${GS_BASECAMP_PATH}"
+            then
+                echo "Error: Could not add submodule ${GS_BASECAMP_PATH}"
+                exit 1
+            fi
+        else
+            if ! git clone "${GS_BASECAMP_REPO_URL}.git" "${GS_BASECAMP_PATH}"
+            then
+                echo "Error: Could not clone repository ${GS_BASECAMP_PATH}"
+                exit 1
+            fi
+        fi
+        cd "${GS_BASECAMP_PATH}"
+        git checkout "${BRANCH}"
+        cd ..
+    else
+        cd "${GS_BASECAMP_PATH}"
+        git pull
+        cd ..
+    fi
 fi
 
 # Load .env
@@ -29,4 +47,4 @@ source ./.env
 set +a
 
 # Run the converter
-.venv/bin/python3 scripts/docs_converter.py --repo_path ./genericsuite-basecamp
+.venv/bin/python3 scripts/docs_converter.py --repo_path "${GS_BASECAMP_PATH}"

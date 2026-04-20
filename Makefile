@@ -131,3 +131,18 @@ deploy: deploy_prod
 
 run: clean_logs
 	flutter run
+
+open-ios-simulator:
+	open /Applications/Xcode.app/Contents/Developer/Applications/Simulator.app
+
+open-android-emulator:
+	bash ./scripts/open_android_emulator.sh
+
+## Other
+
+sast-test:
+	snyk code test --severity-threshold=high --all-projects .
+	snyk test --severity-threshold=high --all-projects .
+
+agents_md_link:
+	ln -s CLAUDE.md AGENTS.md

@@ -18,6 +18,23 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Removed
 
 
+## [Unreleased] - 2026-04-19
+
+### Added
+- AGENTS.md and CLAUDE.md files to provide context and instructions to AI agents [GS-303].
+- Add SAST testing [GS-315].
+- `GS_BASECAMP_PATH` environment variable to specify the path to the GenericSuite Basecamp repository.
+- `README.md` content with pre-requisites, installation and usage instructions [GS-303].
+- `make open-ios-simulator` to open the Apple iOS simulator.
+- `open-android-emulator` and the `open-android-emulator.sh` script.
+
+### Changed
+- `run_docs_converter.sh` will clone the GenericSuite Basecamp repo in the `./genericsuite-basecamp` directory if `GS_BASECAMP_PATH` is empty, otherwise it will use the path specified in `GS_BASECAMP_PATH`.
+
+### Removed
+- Git submodule genericsuite-basecamp
+
+
 ## [1.0.0+3] - 2026-01-25
 
 ### Added
