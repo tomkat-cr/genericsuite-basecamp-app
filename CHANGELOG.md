@@ -21,7 +21,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ## [Unreleased] - 2026-04-19
 
 ### Added
-- AGENTS.md and CLAUDE.md files to provide context and instructions to AI agents [GS-303].
+- AGENTS.md, GEMINI.md, and CLAUDE.md files to provide context and instructions to AI Coding Assistants [GS-303].
 - Add SAST testing [GS-315].
 - `GS_BASECAMP_PATH` environment variable to specify the path to the GenericSuite Basecamp repository.
 - `README.md` content with pre-requisites, installation and usage instructions [GS-303].

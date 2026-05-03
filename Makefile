@@ -143,6 +143,3 @@ open-android-emulator:
 sast-test:
 	snyk code test --severity-threshold=high --all-projects .
 	snyk test --severity-threshold=high --all-projects .
-
-agents_md_link:
-	ln -s CLAUDE.md AGENTS.md

@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to AI Coding Assistants (Claude Code, Gemini CLI, Cursor, Antigravity, etc.) when working with code in this repository.
 
 ## Project Overview
 
@@ -21,7 +21,6 @@ make sast-test        # Run Snyk security scanning
 make generate_icons   # Regenerate app icons from assets/docs/assets/images/gs_logo_circle.png
 make sign_apk         # Sign APK with keystore
 make sign_bundle      # Sign AAB with keystore
-make agents_md_link   # Create symlink AGENTS.md -> CLAUDE.md
 ```
 
 ## Environment Variables
@@ -91,5 +90,5 @@ Language-aware paths follow the pattern `assets/docs/{lang}/{relative-path}`. `D
 
 ## Important Notes
 
-- The `AGENTS.md` file (if present) is a symlink to `CLAUDE.md` — edit only `CLAUDE.md`.
+- The files `AGENTS.md`, `GEMINI.md`, etc. (if present) have only a referece to `@CLAUDE.md` — edit only `CLAUDE.md`.
 - Skills, commands, rules, and sub-agents are located in the `.claude/` directory.

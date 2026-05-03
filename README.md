@@ -77,7 +77,6 @@ make sast-test        # Run Snyk security scanning
 make generate_icons   # Regenerate app icons from assets/docs/assets/images/gs_logo_circle.png
 make sign_apk         # Sign APK with keystore
 make sign_bundle      # Sign AAB with keystore
-make agents_md_link   # Create symlink AGENTS.md -> CLAUDE.md
 ```
 
 ## Platform Targets
