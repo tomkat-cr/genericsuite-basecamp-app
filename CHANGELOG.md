@@ -30,6 +30,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 
 ### Changed
 - `run_docs_converter.sh` will clone the GenericSuite Basecamp repo in the `./genericsuite-basecamp` directory if `GS_BASECAMP_PATH` is empty, otherwise it will use the path specified in `GS_BASECAMP_PATH`.
+- License changed to MIT [FA-244].
 
 ### Removed
 - Git submodule genericsuite-basecamp

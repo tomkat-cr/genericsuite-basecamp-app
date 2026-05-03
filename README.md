@@ -87,7 +87,7 @@ make sign_bundle      # Sign AAB with keystore
 
 ## License
 
-GenericSuite is open-sourced software unencumbered software released into the public domain. Check [LICENSE](https://github.com/tomkat-cr/genericsuite-basecamp-app/blob/main/LICENSE) for more information.
+This project is licensed under the [MIT License](https://github.com/tomkat-cr/genericsuite-basecamp-app/blob/main/LICENSE).
 
 ## Credits
 
