@@ -74,7 +74,7 @@ make fresh            # Clean + reinstall dependencies
 make update_documentation  # Pull docs from GenericSuite Basecamp and generate assets
 make translate_uncommitted  # Translate uncommitted English docs to Spanish
 make sast-test        # Run Snyk security scanning
-make generate_icons   # Regenerate app icons from assets/docs/assets/images/gs_logo_circle.png
+make generate_icons   # Regenerate app icons from assets/mkdocs_root/assets/images/gs_logo_circle.png
 make sign_apk         # Sign APK with keystore
 make sign_bundle      # Sign AAB with keystore
 ```

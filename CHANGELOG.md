@@ -29,8 +29,12 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - `open-android-emulator` and the `open-android-emulator.sh` script.
 
 ### Changed
+- Rename `assets/docs/` to `assets/mkdocs_root/` [GS-208].
 - `run_docs_converter.sh` will clone the GenericSuite Basecamp repo in the `./genericsuite-basecamp` directory if `GS_BASECAMP_PATH` is empty, otherwise it will use the path specified in `GS_BASECAMP_PATH`.
 - License changed to MIT [FA-244].
+
+### Fixed
+- Images are not showing after adding the language prefix to the path [GS-252].
 
 ### Removed
 - Git submodule genericsuite-basecamp

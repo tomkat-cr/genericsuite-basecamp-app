@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+const utDebug = false;
+
 // General date/time functions
 
 int nowToTimestamp() {
@@ -83,7 +85,9 @@ String getDeviceCurrentLanguage() {
   // Extract the language code
   final languageCode = systemLocale.languageCode;
 
-  logDebug('System Language Code: $languageCode');
+  if (utDebug) {
+    logDebug('System Language Code: $languageCode');
+  }
 
   return languageCode;
 }

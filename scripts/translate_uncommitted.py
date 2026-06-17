@@ -5,7 +5,7 @@ from translate_ai_module import translate
 
 def get_uncommitted_md_files(repo_path):
     """
-    Get the list of uncommitted .md files in the docs/en directory.
+    Get the list of uncommitted .md files in the mkdocs_root/en directory.
     """
     try:
         result = subprocess.run(
@@ -20,7 +20,7 @@ def get_uncommitted_md_files(repo_path):
             # Matches 'M ', 'A ', '?? ' etc. followed by the path
             if line.strip() and ".md" in line:
                 path = line.strip().split()[-1]
-                if path.startswith("docs/en/"):
+                if path.startswith("mkdocs_root/en/"):
                     files.append(path)
         return files
     except Exception as e:
@@ -33,7 +33,7 @@ def translate_file(repo_path, file_path):
     Translate a single file and save it to the corresponding /es/ path.
     """
     src_path = os.path.join(repo_path, file_path)
-    dest_path = src_path.replace("/docs/en/", "/docs/es/")
+    dest_path = src_path.replace("/mkdocs_root/en/", "/mkdocs_root/es/")
 
     print(f"Processing: {file_path}")
 
@@ -81,7 +81,7 @@ def main():
     files_pk = get_uncommitted_md_files(repo_path)
 
     if not files_pk:
-        print("No uncommitted documentation files found in docs/en.")
+        print("No uncommitted documentation files found in mkdocs_root/en.")
         return
 
     print(f"Found {len(files_pk)} files to translate.")

@@ -9,6 +9,7 @@ import '../services/utilities.dart';
 import 'doc_drawer.dart';
 
 const debug = false;
+const imageBuilderDebug = false;
 
 const contentLoadError = '# Error\nCould not load content:';
 
@@ -70,10 +71,25 @@ class _DocViewerScreenState extends State<DocViewerScreen> {
     super.dispose();
   }
 
+  String removeRepeatedLang(String path) {
+    return path.replaceAll('$lang/$lang', lang);
+  }
+
+  String addLangIfNoCodeOrAssetsImages(String path) {
+    if (path.contains('code/') ||
+        path.contains('/code') ||
+        path.contains('/assets/images') ||
+        path.contains('assets/images/') ||
+        path.startsWith('$lang/')) {
+      return '';
+    }
+    return '$lang/';
+  }
+
   String _getPath(dynamic originalPath, [String basePath = '']) {
     String path = originalPath.toString();
     path = path.replaceAll('%20', ' ');
-    String currentBasePath = basePath;
+    String currentBasePath = basePath.trim();
     if (path.startsWith('./') || path.startsWith('../')) {
       for (int i = 0; i < path.split('/').length - 1; i++) {
         if (path.startsWith('./')) {
@@ -85,8 +101,12 @@ class _DocViewerScreenState extends State<DocViewerScreen> {
           path = path.substring(3);
         }
       }
-      path = '$currentBasePath${currentBasePath.isNotEmpty ? '/' : ''}$path';
+      path =
+          '$currentBasePath${currentBasePath.isNotEmpty ? '/' : addLangIfNoCodeOrAssetsImages(originalPath)}$path';
+    } else if (path.startsWith('Releases/')) {
+      path = '${addLangIfNoCodeOrAssetsImages(path)}$path';
     }
+    path = removeRepeatedLang(path);
     if (debug) {
       logDebug(
           'DocViewerScreen | _getPath | originalPath: $originalPath | basePath: $basePath | currentBasePath: $currentBasePath | Final path: $path');
@@ -119,14 +139,16 @@ class _DocViewerScreenState extends State<DocViewerScreen> {
       }
     }
 
+    String finalFullPath = removeRepeatedLang('$lang/$fullPath');
     try {
-      content = await rootBundle.loadString('assets/docs/$lang/$fullPath');
+      content =
+          await rootBundle.loadString('assets/mkdocs_root/$finalFullPath');
     } catch (e) {
       // Try adding .md if it's missing
       if (!fullPath.endsWith('.md')) {
         try {
-          content =
-              await rootBundle.loadString('assets/docs/$lang/$fullPath.md');
+          content = await rootBundle
+              .loadString('assets/mkdocs_root/$finalFullPath.md');
         } catch (e2) {
           logError(
               '$contentLoadError File "$fullPath.md" (or .md). Error: $e \n[GFC-E-010]');
@@ -260,8 +282,10 @@ class _DocViewerScreenState extends State<DocViewerScreen> {
                     String assetPath = '';
                     dynamic image;
                     if (path.startsWith('http')) {
-                      logDebug(
-                          'DocViewerScreen [0] | imageBuilder | path: $path | assetPath: $assetPath');
+                      if (imageBuilderDebug) {
+                        logDebug(
+                            'DocViewerScreen [0] | imageBuilder | path: $path | assetPath: $assetPath');
+                      }
                       image = Image.network(path, semanticLabel: alt);
                     } else {
                       // Resolve relative path to assets
@@ -271,25 +295,36 @@ class _DocViewerScreenState extends State<DocViewerScreen> {
                           parentPath.isNotEmpty) {
                         if (path.contains('../assets/images/')) {
                           path = path.split('../assets/images/').last;
-                          assetPath = 'assets/docs/assets/images/$path';
-                          logDebug(
-                              'DocViewerScreen [1] | imageBuilder | path: $path | assetPath: $assetPath');
+                          assetPath =
+                              'assets/mkdocs_root/$lang/assets/images/$path';
+                          if (imageBuilderDebug) {
+                            logDebug(
+                                'DocViewerScreen [1] | imageBuilder | path: $path | assetPath: $assetPath');
+                          }
                         } else {
                           path = './$path';
                           assetPath =
-                              'assets/docs/$lang/${_getPath(path, parentPath)}';
-                          logDebug(
-                              'DocViewerScreen [2] | imageBuilder | path: $path | assetPath: $assetPath');
+                              'assets/mkdocs_root/$lang/${_getPath(path, parentPath)}';
+                          if (imageBuilderDebug) {
+                            logDebug(
+                                'DocViewerScreen [2] | imageBuilder | path: $path | assetPath: $assetPath');
+                          }
                         }
                       } else {
-                        assetPath = 'assets/docs/${_getPath(path, parentPath)}';
-                        logDebug(
-                            'DocViewerScreen [3] | imageBuilder | path: $path | assetPath: $assetPath');
+                        assetPath =
+                            'assets/mkdocs_root/${_getPath(path, parentPath)}';
+                        if (imageBuilderDebug) {
+                          logDebug(
+                              'DocViewerScreen [3] | imageBuilder | path: $path | assetPath: $assetPath');
+                        }
                       }
-                      logDebug(
-                          'DocViewerScreen [4] | imageBuilder | path: $path | assetPath: $assetPath');
+                      if (imageBuilderDebug) {
+                        logDebug(
+                            'DocViewerScreen [4] | imageBuilder | path: $path | assetPath: $assetPath');
+                      }
                       try {
-                        image = Image.asset(assetPath, semanticLabel: alt);
+                        image = Image.asset(removeRepeatedLang(assetPath),
+                            semanticLabel: alt);
                       } catch (e) {
                         logError(
                             'DocViewerScreen | imageBuilder | path: $path | '
@@ -299,7 +334,7 @@ class _DocViewerScreenState extends State<DocViewerScreen> {
                             style: const TextStyle(color: Colors.red));
                       }
                     }
-                    if (debug) {
+                    if (imageBuilderDebug) {
                       logDebug('DocViewerScreen | imageBuilder | path: $path | '
                           'currentPath: $_currentPath | assetPath: $assetPath');
                     }

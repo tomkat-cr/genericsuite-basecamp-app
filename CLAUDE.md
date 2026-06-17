@@ -18,7 +18,7 @@ make fresh            # Clean + reinstall dependencies
 make update_documentation  # Pull docs from GenericSuite Basecamp and generate assets
 make translate_uncommitted  # Translate uncommitted English docs to Spanish
 make sast-test        # Run Snyk security scanning
-make generate_icons   # Regenerate app icons from assets/docs/assets/images/gs_logo_circle.png
+make generate_icons   # Regenerate app icons from assets/mkdocs_root/assets/images/gs_logo_circle.png
 make sign_apk         # Sign APK with keystore
 make sign_bundle      # Sign AAB with keystore
 ```
@@ -43,7 +43,7 @@ The app uses **Provider** for state management with `MultiProvider` at the root.
 ### Documentation Pipeline
 
 1. `scripts/run_docs_converter.sh` — orchestrator: sets up Python venv, clones/pulls the `genericsuite-basecamp` repo, runs the converter
-2. `scripts/docs_converter.py` — `DocsConverter` class: reads `genericsuite-basecamp/docs/{en,es}/`, copies to `assets/docs/{lang}/`, and generates `assets/docs_manifest.json` (the navigation tree)
+2. `scripts/docs_converter.py` — `DocsConverter` class: reads `genericsuite-basecamp/mkdocs_root/{en,es}/`, copies to `assets/mkdocs_root/{lang}/`, and generates `assets/docs_manifest.json` (the navigation tree)
 3. `scripts/translate_ai_module.py` — wraps OpenAI + Google Translate fallback for Spanish translation; translation is **off by default** in the converter (pass `--translation` to enable)
 
 ### Key Files
@@ -62,14 +62,14 @@ The app uses **Provider** for state management with `MultiProvider` at the root.
 ```
 assets/
 ├── docs_manifest.json          # Generated navigation tree
-└── docs/
+└── mkdocs_root/
     ├── assets/images/          # Shared images (logos)
     ├── code/                   # Example code
     ├── en/                     # English markdown docs
     └── es/                     # Spanish markdown docs (translated)
 ```
 
-Language-aware paths follow the pattern `assets/docs/{lang}/{relative-path}`. `DocViewerScreen` resolves relative links and `../assets/images/` paths against the current document's base path.
+Language-aware paths follow the pattern `assets/mkdocs_root/{lang}/{relative-path}`. `DocViewerScreen` resolves relative links and `../assets/images/` paths against the current document's base path.
 
 ### Known Limitations / TODOs in Code
 
@@ -91,4 +91,4 @@ Language-aware paths follow the pattern `assets/docs/{lang}/{relative-path}`. `D
 ## Important Notes
 
 - The files `AGENTS.md`, `GEMINI.md`, etc. (if present) have only a referece to `@CLAUDE.md` — edit only `CLAUDE.md`.
-- Skills, commands, rules, and sub-agents are located in the `.claude/` directory.
+- Skills live in `.ai/skills/` (source of truth); symlinked under `.agents/skills/`, `.claude/skills/`, `.codex/skills/`, `.gemini/skills/`, and `.devin/skills/`.

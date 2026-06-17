@@ -36,12 +36,12 @@ doc/api/
 
 genericsuite-basecamp/
 assets/docs_manifest.json
-assets/docs/docs_manifest.json
-assets/docs/en/
-assets/docs/es/
-assets/docs/code/
-!assets/docs/assets/images/gs_ai_logo_circle.png
-!assets/docs/assets/images/gs_logo_circle.png
+assets/mkdocs_root/docs_manifest.json
+assets/mkdocs_root/en/
+assets/mkdocs_root/es/
+assets/mkdocs_root/code/
+!assets/mkdocs_root/assets/images/gs_ai_logo_circle.png
+!assets/mkdocs_root/assets/images/gs_logo_circle.png
 __pycache__
 
 # Claude Code

@@ -56,7 +56,7 @@ dev_dependencies:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/docs/assets/images/gs_logo_circle.png"
+  image_path: "assets/mkdocs_root/assets/images/gs_logo_circle.png"
   min_sdk_android: 21 # android min sdk version
 
 # For information on the generic Dart part of this file, see the
@@ -74,60 +74,63 @@ flutter:
   assets:
     - assets/
 
-    - assets/docs/
-    - assets/docs/assets/
-    - assets/docs/assets/images/
-    - assets/docs/code/
-    - assets/docs/code/exampleapp/
-    - assets/docs/code/exampleapp/assets/
-    - assets/docs/code/exampleapp/apps/
-    - assets/docs/code/exampleapp/apps/api-chalice/
-    - assets/docs/code/exampleapp/apps/api-fastapi/
-    - assets/docs/code/exampleapp/apps/api-flask/
-    - assets/docs/code/exampleapp/apps/config_dbdef/
-    - assets/docs/code/exampleapp/apps/mcp-server/
-    - assets/docs/code/exampleapp/apps/mcp-server/assets/
-    - assets/docs/code/exampleapp/apps/ui/
-    - assets/docs/code/exampleapp/apps/ui/public/
-    - assets/docs/code/exampleapp/apps/ui/src/
-    - assets/docs/code/exampleapp/apps/ui/src/_images/
-    - assets/docs/code/exampleapp/packages/
-    - assets/docs/code/exampleapp/packages/eslint-config/
-    - assets/docs/code/fastapitemplate/
-    - assets/docs/code/fastapitemplate/assets/
-    - assets/docs/code/fastapitemplate/config_dbdef/
-    - assets/docs/code/fastapitemplate/mcp-server/
-    - assets/docs/code/fastapitemplate/server/
-    - assets/docs/code/fastapitemplate/ui/
-    - assets/docs/code/fastapitemplate/ui/public/
-    - assets/docs/code/genericsuite-be-scripts/
-    - assets/docs/code/genericsuite-configs/
-    - assets/docs/en/
-    - assets/docs/en/Backend-Development/
-    - assets/docs/en/Backend-Development/GenericSuite-AI/
-    - assets/docs/en/Backend-Development/GenericSuite-Core/
-    - assets/docs/en/Backend-Development/GenericSuite-Scripts/
-    - assets/docs/en/Configuration-Guide/
-    - assets/docs/en/Frontend-Development/
-    - assets/docs/en/Frontend-Development/GenericSuite-AI/
-    - assets/docs/en/Frontend-Development/GenericSuite-Core/
-    - assets/docs/en/Other/
-    - assets/docs/en/Releases/
-    - assets/docs/en/Releases/images/
-    - assets/docs/en/Sample-Code/
-    - assets/docs/es/
-    - assets/docs/es/Backend-Development/
-    - assets/docs/es/Backend-Development/GenericSuite-AI/
-    - assets/docs/es/Backend-Development/GenericSuite-Core/
-    - assets/docs/es/Backend-Development/GenericSuite-Scripts/
-    - assets/docs/es/Configuration-Guide/
-    - assets/docs/es/Frontend-Development/
-    - assets/docs/es/Frontend-Development/GenericSuite-AI/
-    - assets/docs/es/Frontend-Development/GenericSuite-Core/
-    - assets/docs/es/Other/
-    - assets/docs/es/Releases/
-    - assets/docs/es/Releases/images/
-    - assets/docs/es/Sample-Code/
+    - assets/mkdocs_root/
+    - assets/mkdocs_root/assets/
+    - assets/mkdocs_root/assets/images/
+    - assets/mkdocs_root/code/
+    - assets/mkdocs_root/code/exampleapp/
+    - assets/mkdocs_root/code/exampleapp/assets/
+    - assets/mkdocs_root/code/exampleapp/apps/
+    - assets/mkdocs_root/code/exampleapp/apps/api-chalice/
+    - assets/mkdocs_root/code/exampleapp/apps/api-fastapi/
+    - assets/mkdocs_root/code/exampleapp/apps/api-flask/
+    - assets/mkdocs_root/code/exampleapp/apps/config_dbdef/
+    - assets/mkdocs_root/code/exampleapp/apps/mcp-server/
+    - assets/mkdocs_root/code/exampleapp/apps/mcp-server/assets/
+    - assets/mkdocs_root/code/exampleapp/apps/ui/
+    - assets/mkdocs_root/code/exampleapp/apps/ui/public/
+    - assets/mkdocs_root/code/exampleapp/apps/ui/src/
+    - assets/mkdocs_root/code/exampleapp/apps/ui/src/images/
+    - assets/mkdocs_root/code/exampleapp/packages/
+    - assets/mkdocs_root/code/exampleapp/packages/eslint-config/
+    - assets/mkdocs_root/code/fastapitemplate/
+    - assets/mkdocs_root/code/fastapitemplate/assets/
+    - assets/mkdocs_root/code/fastapitemplate/config_dbdef/
+    - assets/mkdocs_root/code/fastapitemplate/mcp-server/
+    - assets/mkdocs_root/code/fastapitemplate/server/
+    - assets/mkdocs_root/code/fastapitemplate/ui/
+    - assets/mkdocs_root/code/fastapitemplate/ui/public/
+    - assets/mkdocs_root/code/genericsuite-be-scripts/
+    - assets/mkdocs_root/code/genericsuite-configs/
+    - assets/mkdocs_root/en/
+    - assets/mkdocs_root/en/Backend-Development/
+    - assets/mkdocs_root/en/Backend-Development/GenericSuite-AI/
+    - assets/mkdocs_root/en/Backend-Development/GenericSuite-Core/
+    - assets/mkdocs_root/en/Backend-Development/GenericSuite-Scripts/
+    - assets/mkdocs_root/en/Configuration-Guide/
+    - assets/mkdocs_root/en/Frontend-Development/
+    - assets/mkdocs_root/en/Frontend-Development/GenericSuite-AI/
+    - assets/mkdocs_root/en/Frontend-Development/GenericSuite-Core/
+    - assets/mkdocs_root/en/Other/
+    - assets/mkdocs_root/en/Releases/
+    - assets/mkdocs_root/en/Releases/images/
+    - assets/mkdocs_root/en/Sample-Code/
+    - assets/mkdocs_root/es/
+    - assets/mkdocs_root/es/Backend-Development/
+    - assets/mkdocs_root/es/Backend-Development/GenericSuite-AI/
+    - assets/mkdocs_root/es/Backend-Development/GenericSuite-Core/
+    - assets/mkdocs_root/es/Backend-Development/GenericSuite-Scripts/
+    - assets/mkdocs_root/es/Configuration-Guide/
+    - assets/mkdocs_root/es/Frontend-Development/
+    - assets/mkdocs_root/es/Frontend-Development/GenericSuite-AI/
+    - assets/mkdocs_root/es/Frontend-Development/GenericSuite-Core/
+    - assets/mkdocs_root/es/Other/
+    - assets/mkdocs_root/es/Releases/
+    - assets/mkdocs_root/es/Releases/images/
+    - assets/mkdocs_root/es/Sample-Code/
+
+    - assets/mkdocs_root/en/Releases/images/GS_Release_2026-02-18_Image_1A.png
+    - assets/mkdocs_root/es/Releases/images/GS_Release_2026-02-18_Image_1A.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

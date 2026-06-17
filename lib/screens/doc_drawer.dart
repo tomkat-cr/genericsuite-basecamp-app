@@ -86,7 +86,7 @@ class _DocDrawerState extends State<DocDrawer> {
                   width: 90,
                   height: 90,
                   image: AssetImage(
-                      'assets/docs/assets/images/gs_ai_logo_circle.png'),
+                      'assets/mkdocs_root/assets/images/gs_ai_logo_circle.png'),
                 ),
                 SizedBox(width: 12),
                 Column(

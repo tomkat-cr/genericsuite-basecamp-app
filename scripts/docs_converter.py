@@ -279,7 +279,7 @@ class DocsConverter:
             "--repo_path", required=True,
             help="Path to the genericsuite-basecamp repository")
         parser.add_argument(
-            "--output_dir", default="assets/docs",
+            "--output_dir", default="assets/mkdocs_root",
             help="Path to output assets")
         parser.add_argument(
             "--translation", default="false",
@@ -309,9 +309,10 @@ class DocsConverter:
             print(f"YAML loading failed even after cleanup: {e}")
             sys.exit(1)
 
-        docs_dir = os.path.join(repo_path, self.config.get("docs_dir", "docs"))
+        docs_dir = os.path.join(
+            repo_path, self.config.get("docs_dir", "mkdocs_root"))
         if "docs_for_ftp" in docs_dir:
-            docs_dir = os.path.join(repo_path, "docs")
+            docs_dir = os.path.join(repo_path, "mkdocs_root")
 
         dest_dir = args.output_dir
 

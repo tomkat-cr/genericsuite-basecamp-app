@@ -1,4 +1,4 @@
-.DEFAULT_GOAL := local
+# .DEFAULT_GOAL := local
 .PHONY: help install update update_documentation qa build build_local run clean clean_rm clean_temp_dir clean_logs clean_build
 SHELL := /bin/bash
 
