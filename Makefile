@@ -141,5 +141,6 @@ open-android-emulator:
 ## Other
 
 sast-test:
+	snyk auth
 	snyk code test --severity-threshold=high --all-projects .
 	snyk test --severity-threshold=high --all-projects .
