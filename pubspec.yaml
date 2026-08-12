@@ -111,6 +111,9 @@ flutter:
     - assets/mkdocs_root/en/Frontend-Development/
     - assets/mkdocs_root/en/Frontend-Development/GenericSuite-AI/
     - assets/mkdocs_root/en/Frontend-Development/GenericSuite-Core/
+    - assets/mkdocs_root/en/Frontend-Development/GenericSuite-Scripts/
+    - assets/mkdocs_root/en/Mobile-Development/
+    - assets/mkdocs_root/en/Deployment-Guide/
     - assets/mkdocs_root/en/Other/
     - assets/mkdocs_root/en/Releases/
     - assets/mkdocs_root/en/Releases/images/
@@ -124,6 +127,9 @@ flutter:
     - assets/mkdocs_root/es/Frontend-Development/
     - assets/mkdocs_root/es/Frontend-Development/GenericSuite-AI/
     - assets/mkdocs_root/es/Frontend-Development/GenericSuite-Core/
+    - assets/mkdocs_root/es/Frontend-Development/GenericSuite-Scripts/
+    - assets/mkdocs_root/es/Mobile-Development/
+    - assets/mkdocs_root/es/Deployment-Guide/
     - assets/mkdocs_root/es/Other/
     - assets/mkdocs_root/es/Releases/
     - assets/mkdocs_root/es/Releases/images/

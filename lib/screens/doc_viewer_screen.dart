@@ -72,7 +72,13 @@ class _DocViewerScreenState extends State<DocViewerScreen> {
   }
 
   String removeRepeatedLang(String path) {
-    return path.replaceAll('$lang/$lang', lang);
+    String newPath = path;
+    newPath = newPath.replaceAll('$lang/$lang', lang);
+    newPath = newPath.replaceAll('es/en', lang);
+    newPath = newPath.replaceAll('en/es', lang);
+    newPath = newPath.replaceAll('en/code', 'code');
+    newPath = newPath.replaceAll('es/code', 'code');
+    return newPath;
   }
 
   String addLangIfNoCodeOrAssetsImages(String path) {
@@ -197,16 +203,19 @@ class _DocViewerScreenState extends State<DocViewerScreen> {
     }
   }
 
-  String replaceBr(String content) {
+  String replaceHtmlFormatting(String content) {
+    // Replace <BR/>, <BR>, <br/>, <br> with a new line
     content = content.replaceAll('<BR/>', '\n');
     content = content.replaceAll('<BR>', '\n');
     content = content.replaceAll('<br/>', '\n');
     content = content.replaceAll('<br>', '\n');
+    // Remove the .center class
+    content = content.replaceAll('{ .center }', '');
     return content;
   }
 
   String transformContent(String content) {
-    return preprocessMarkdownIcons(replaceBr(content));
+    return preprocessMarkdownIcons(replaceHtmlFormatting(content));
   }
 
   void _buildAnchors() {

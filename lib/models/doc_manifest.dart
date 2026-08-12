@@ -29,6 +29,31 @@ class DocManifestItem {
       lang: json['lang'] as String,
     );
   }
+
+  DocManifestItem copyWithLang(String newLang) {
+    return DocManifestItem(
+      title: title,
+      path: path,
+      children: children,
+      type: type,
+      source: source,
+      lang: newLang,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is DocManifestItem &&
+        other.path == path &&
+        other.title == title &&
+        other.type == type &&
+        other.source == source &&
+        other.lang == lang;
+  }
+
+  @override
+  int get hashCode => Object.hash(path, title, type, source, lang);
 }
 
 class DocManifestLoader {

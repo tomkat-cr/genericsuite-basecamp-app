@@ -95,14 +95,7 @@ class _AppHomeState extends State<AppHome> {
       onLangChanged: (newLang) {
         setState(() {
           lang = newLang;
-          _currentItem = DocManifestItem.fromJson({
-            'path': _currentItem!.path,
-            'title': _currentItem!.title,
-            'children': _currentItem!.children,
-            'type': _currentItem!.type,
-            'source': _currentItem!.source,
-            'lang': lang,
-          });
+          _currentItem = _currentItem!.copyWithLang(lang);
         });
       },
       lang: lang,

@@ -69,7 +69,7 @@ String preprocessMarkdownIcons(String originalText) {
             '\n iconPattern: $iconPattern');
       }
       text = text.replaceAll(iconPattern, value);
-      // TODO: make icos work because now it's replacing the patters with a blank space
+      // TODO: make icons work properly because now it's replacing the patters with a blank space
       // text = text.replaceAll(iconPattern, value.toString());
       // text = text.replaceAll(iconPattern, '<i class="fa fa-$iconName"></i>');
     }

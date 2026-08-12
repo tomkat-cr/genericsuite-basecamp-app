@@ -35,6 +35,8 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 
 ### Fixed
 - Images are not showing after adding the language prefix to the path [GS-252].
+- Changing the language of main directory documents shows "DVS-E-020" error [GS-334].
+- Show code example README.md files wasn't working [GS-252].
 
 ### Removed
 - Git submodule genericsuite-basecamp
@@ -59,7 +61,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Update documentation asset paths and image resolution, following the multi-language support addition to genericsuite_basecamp [GS-252]
 
 ### Fixed
-- Remove <BR/> before show the content [GS-252].
+- Remove <BR/> and { .center } tags before show the content [GS-252].
 - Add additional lines at the content end for those cases when the device has a the "pin the home screen design" configration enabled [GS-252].
 - Fix the banner size on the app menu [GS-252].
 
