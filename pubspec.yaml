@@ -1,0 +1,166 @@
+name: gsdoc
+description: "GenericSuite Documentation"
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+# In Windows, build-name is used as the major, minor, and patch parts
+# of the product and file versions while build-number is used as the build suffix.
+version: 1.0.0+3
+
+environment:
+  sdk: ^3.5.4
+
+# Dependencies specify other packages that your package needs in order to work.
+# To automatically upgrade your package dependencies to the latest versions
+# consider running `flutter pub upgrade --major-versions`. Alternatively,
+# dependencies can be manually updated by changing the version numbers below to
+# the latest version available on pub.dev. To see which dependencies have newer
+# versions available, run `flutter pub outdated`.
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.8
+  provider: ^6.1.5+1
+  google_fonts: ^8.0.2
+  url_launcher: ^6.3.1
+  markdown: ^7.3.0
+  intl: ^0.20.2
+  flutter_markdown_plus: ^1.0.7
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # The "flutter_lints" package below contains a set of recommended lints to
+  # encourage good coding practices. The lint set provided by the package is
+  # activated in the `analysis_options.yaml` file located at the root of your
+  # package. See that file for information about deactivating specific lint
+  # rules and activating additional ones.
+  flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.3
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/mkdocs_root/assets/images/gs_logo_circle.png"
+  min_sdk_android: 21 # android min sdk version
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter packages.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/
+
+    - assets/mkdocs_root/
+    - assets/mkdocs_root/assets/
+    - assets/mkdocs_root/assets/images/
+    - assets/mkdocs_root/code/
+    - assets/mkdocs_root/code/exampleapp/
+    - assets/mkdocs_root/code/exampleapp/assets/
+    - assets/mkdocs_root/code/exampleapp/apps/
+    - assets/mkdocs_root/code/exampleapp/apps/api-chalice/
+    - assets/mkdocs_root/code/exampleapp/apps/api-fastapi/
+    - assets/mkdocs_root/code/exampleapp/apps/api-flask/
+    - assets/mkdocs_root/code/exampleapp/apps/config_dbdef/
+    - assets/mkdocs_root/code/exampleapp/apps/mcp-server/
+    - assets/mkdocs_root/code/exampleapp/apps/mcp-server/assets/
+    - assets/mkdocs_root/code/exampleapp/apps/ui/
+    - assets/mkdocs_root/code/exampleapp/apps/ui/public/
+    - assets/mkdocs_root/code/exampleapp/apps/ui/src/
+    - assets/mkdocs_root/code/exampleapp/apps/ui/src/images/
+    - assets/mkdocs_root/code/exampleapp/packages/
+    - assets/mkdocs_root/code/exampleapp/packages/eslint-config/
+    - assets/mkdocs_root/code/fastapitemplate/
+    - assets/mkdocs_root/code/fastapitemplate/assets/
+    - assets/mkdocs_root/code/fastapitemplate/config_dbdef/
+    - assets/mkdocs_root/code/fastapitemplate/mcp-server/
+    - assets/mkdocs_root/code/fastapitemplate/server/
+    - assets/mkdocs_root/code/fastapitemplate/ui/
+    - assets/mkdocs_root/code/fastapitemplate/ui/public/
+    - assets/mkdocs_root/code/genericsuite-be-scripts/
+    - assets/mkdocs_root/code/genericsuite-configs/
+    - assets/mkdocs_root/en/
+    - assets/mkdocs_root/en/Backend-Development/
+    - assets/mkdocs_root/en/Backend-Development/GenericSuite-AI/
+    - assets/mkdocs_root/en/Backend-Development/GenericSuite-Core/
+    - assets/mkdocs_root/en/Backend-Development/GenericSuite-Scripts/
+    - assets/mkdocs_root/en/Configuration-Guide/
+    - assets/mkdocs_root/en/Frontend-Development/
+    - assets/mkdocs_root/en/Frontend-Development/GenericSuite-AI/
+    - assets/mkdocs_root/en/Frontend-Development/GenericSuite-Core/
+    - assets/mkdocs_root/en/Frontend-Development/GenericSuite-Scripts/
+    - assets/mkdocs_root/en/Mobile-Development/
+    - assets/mkdocs_root/en/Deployment-Guide/
+    - assets/mkdocs_root/en/Other/
+    - assets/mkdocs_root/en/Releases/
+    - assets/mkdocs_root/en/Releases/images/
+    - assets/mkdocs_root/en/Sample-Code/
+    - assets/mkdocs_root/es/
+    - assets/mkdocs_root/es/Backend-Development/
+    - assets/mkdocs_root/es/Backend-Development/GenericSuite-AI/
+    - assets/mkdocs_root/es/Backend-Development/GenericSuite-Core/
+    - assets/mkdocs_root/es/Backend-Development/GenericSuite-Scripts/
+    - assets/mkdocs_root/es/Configuration-Guide/
+    - assets/mkdocs_root/es/Frontend-Development/
+    - assets/mkdocs_root/es/Frontend-Development/GenericSuite-AI/
+    - assets/mkdocs_root/es/Frontend-Development/GenericSuite-Core/
+    - assets/mkdocs_root/es/Frontend-Development/GenericSuite-Scripts/
+    - assets/mkdocs_root/es/Mobile-Development/
+    - assets/mkdocs_root/es/Deployment-Guide/
+    - assets/mkdocs_root/es/Other/
+    - assets/mkdocs_root/es/Releases/
+    - assets/mkdocs_root/es/Releases/images/
+    - assets/mkdocs_root/es/Sample-Code/
+
+    - assets/mkdocs_root/en/Releases/images/GS_Release_2026-02-18_Image_1A.png
+    - assets/mkdocs_root/es/Releases/images/GS_Release_2026-02-18_Image_1A.png
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/to/resolution-aware-images
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/to/asset-from-package
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic
+  #   - family: Trajan Pro
+  #     fonts:
+  #       - asset: fonts/TrajanPro.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/to/font-from-package
+

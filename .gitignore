@@ -13,6 +13,7 @@ doc/api/
 
 # dotenv environment variables file
 .env*
+!.env.example
 
 # Avoid committing generated Javascript files:
 *.dart.js
@@ -27,3 +28,29 @@ doc/api/
 
 .flutter-plugins
 .flutter-plugins-dependencies
+
+.venv/
+
+.idea/
+.vscode/
+
+genericsuite-basecamp
+genericsuite-basecamp/
+assets/docs_manifest.json
+assets/mkdocs_root/docs_manifest.json
+assets/mkdocs_root/en/
+assets/mkdocs_root/es/
+assets/mkdocs_root/code/
+!assets/mkdocs_root/assets/images/gs_ai_logo_circle.png
+!assets/mkdocs_root/assets/images/gs_logo_circle.png
+__pycache__
+
+# Claude Code
+.claude/settings.local.json
+
+# AI Agents
+.claude
+.agents
+.codex
+.cursor
+.gemini
