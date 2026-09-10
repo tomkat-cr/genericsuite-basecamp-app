@@ -42,7 +42,7 @@ install_tools:
 	cd /tmp && curl -O https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_arm64_3.38.6-stable.zip
 	mkdir -p "${HOME}/flutter"
 	unzip flutter_macos_arm64_3.38.6-stable.zip -d "${HOME}/flutter"
-	export PATH=$PATH:"${HOME}/flutter/bin"
+	export PATH=${PATH}:"${HOME}/flutter/bin"
 	flutter pub global activate
 
 translate_uncommitted:

@@ -18,7 +18,18 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 ### Removed
 
 
-## [1.0.0+4] - 2026-08-30
+## [1.0.0+3] - 2026-09-08
+
+### Changed
+- Upgrade Android NDK to 28 and Java compatibility to 17 in build.gradle to fix "make build" warnings [GS-252].
+- Add generate_keystore command to README [GS-252].
+
+### Fixed
+- Fix: Update Makefile to use consistent PATH export syntax [GS-252].
+- Release version in CHANGELOG.md changed to 1.0.0+3 to be consistent with uploaded bundle to play store [GS-252].
+
+
+## [1.0.0+3B] - 2026-08-30
 
 ### Added
 - AGENTS.md, GEMINI.md, and CLAUDE.md files to provide context and instructions to AI Coding Assistants [GS-303].
@@ -42,7 +53,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and [Keep a Ch
 - Git submodule genericsuite-basecamp
 
 
-## [1.0.0+3] - 2026-01-25
+## [1.0.0+3A] - 2026-01-25
 
 ### Added
 - Spanish docs, using Google Translate and OpenAI gpt-5-nano, thanks to @otobonh [GS-252].

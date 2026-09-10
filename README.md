@@ -1,5 +1,7 @@
 # Genericsuite Documentation Mobile App
 
+![Genericsuite Superproject banner](./assets/mkdocs_root/assets/images/GS_Superproject_banner_010.png)
+
 **GS Doc** is a Flutter mobile app that serves as a documentation viewer for GenericSuite Basecamp. Documentation is bundled as assets (no runtime downloads), supports English/Spanish with auto-detection from device locale, and uses Markdown rendering with custom image/link handling.
 
 ## Requirements
@@ -69,7 +71,8 @@ make install          # Install Flutter dependencies (flutter pub get)
 make run              # Clean logs and run on device/emulator
 make build_local      # Build debug APK
 make build            # Build release APK
-make build_bundle     # Build AAB for Google Play Store
+make build_bundle     # Build AAB for Google Play Store publishing
+make generate_keystore  # Generate keystore for signing APK and AAB
 make fresh            # Clean + reinstall dependencies
 make update_documentation  # Pull docs from GenericSuite Basecamp and generate assets
 make translate_uncommitted  # Translate uncommitted English docs to Spanish
